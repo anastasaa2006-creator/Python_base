@@ -40,7 +40,6 @@ def deg1(lat):
     else:
         return f"{degrees:03d}°{minutes:02d}'{sec:05.2f}\"S"
         
- """      
 print("\n")
 print("TEST_DEG1")
 test_deg1 = [42.673701, -42.673701, 0]
@@ -60,7 +59,7 @@ for test_idx in range(len(test_deg1)):
         print("Test failed")
 
 print(f"{total_test_cnt} test executed, {test_passed_cnt} tests passed successfully!")
-"""  
+  
 
 def deg2(long):
     degrees = int(abs(long))
@@ -72,7 +71,7 @@ def deg2(long):
         return f"{degrees:03d}°{minutes:02d}'{sec:05.2f}\"E"
     else:
         return f"{degrees:03d}°{minutes:02d}'{sec:05.2f}\"W"        
- """     
+    
 print("\n")
 print("TEST_DEG2")
 test_deg2 = [-73.608792, 73.608792, 0]
@@ -92,7 +91,7 @@ for test_idx in range(len(test_deg2)):
         print("Test failed")
 
 print(f"{total_test_cnt} test executed, {test_passed_cnt} tests passed successfully!")
-"""  
+ 
 
 def loc():
     code = int(input('Enter a ZIP Code to lookup => '))
@@ -111,7 +110,7 @@ def loc():
             break
     if not found:
         print(f"ZIP Code {code} not found")
- """         
+        
 print("\n")
 print("TEST_LOC")
 test_loc = [
@@ -144,7 +143,7 @@ for test_idx in range(len(test_loc)):
         print("Test failed")
 
 print(f"{total_test_cnt} test executed, {test_passed_cnt} tests passed successfully!")
-"""  
+  
 def zip():
     city = input('Enter a city name to lookup => ').strip().lower()
     print(city)
@@ -164,7 +163,7 @@ def zip():
         print(f"The following ZIP Code(s) found for {city_table}, {state_table} : {', '.join(zip_list)}")
     else:
         print(f"No ZIP Code found for {city}, {state}")
-  """  
+ 
 print("\n")
 print("TEST_ZIP")
 test_zip = [
@@ -192,7 +191,7 @@ for test_idx in range(len(test_zip)):
         print("Test failed")
 
 print(f"{total_test_cnt} test executed, {test_passed_cnt} tests passed successfully!")
- """   
+   
 def calc(lat1, lat2,long1,long2):
     lat1 = lat1 * math.pi / 180
     long1 = long1 * math.pi / 180
@@ -208,7 +207,7 @@ def calc(lat1, lat2,long1,long2):
     result = 3959.0 * c
     
     return result 
- """   
+   
 print("\n")
 print("TEST_CALC")
 test_calc = [
@@ -231,7 +230,7 @@ for test_idx in range(len(test_calc)):
         print("Test failed")
 
 print(f"{total_test_cnt} test executed, {test_passed_cnt} tests passed successfully!")
-"""
+
     
 def dist():
     code1 = int(input('Enter the first ZIP Code => '))
@@ -258,7 +257,7 @@ def dist():
             print(f"ZIP Code {code1} not found")
         if not found2:
             print(f"ZIP Code {code2} not found")
-"""
+
 print("\n")
 print("TEST_DIST")
 test_dist = [
@@ -286,7 +285,7 @@ for test_idx in range(len(test_dist)):
         print("Test failed")
 
 print(f"{total_test_cnt} test executed, {test_passed_cnt} tests passed successfully!")
- """
+
 zip_codes = read_zip_all()
 
 while True:
