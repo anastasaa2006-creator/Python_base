@@ -165,7 +165,7 @@ def zip():
     state = input('Enter the state name to lookup => ').strip().lower()
     print(state)
 
-    if not city or not state:
+    if not city.strip() or not state.strip():
         print("Ошибка: city и state не могут быть пустыми")
         return
 
