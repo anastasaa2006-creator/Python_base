@@ -1,5 +1,8 @@
 import sys
-from PIL import Image, ImageDraw
+try:
+    from PIL import Image, ImageDraw
+except ImportError:
+    print("ОШИБКА: Библиотека Pillow не установлена!")
 
 NUM_OF_GENERATIONS = 10
 
