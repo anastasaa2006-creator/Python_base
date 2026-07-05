@@ -13,3 +13,4 @@ end - выход из программы (Done);
 
 - ЛР6.py - основной код ;
 - zip_codes_states.csv - база данных (обязательно) ;
+- requirements.txt - подключение pillow
