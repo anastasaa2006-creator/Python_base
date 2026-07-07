@@ -1,7 +1,6 @@
 import sys
 from PIL import Image, ImageDraw
 
-NUM_OF_GENERATIONS = 10
 CELL_SIZE = 20
 PADDING = 2
 MAX_AGE = 10
@@ -98,7 +97,7 @@ def get_cell_color(base_color, age, max_age=MAX_AGE):
     return (int(r * factor), int(g * factor), int(b * factor))
 
 
-def simulation(grid):
+def simulation(grid, num_generations):
     rows = len(grid)
     cols = len(grid[0])
     
@@ -106,7 +105,7 @@ def simulation(grid):
     age_grid = [[0 for _ in range(cols)] for _ in range(rows)]
     all_ages = [age_grid]
     
-    for _ in range(NUM_OF_GENERATIONS):
+    for _ in range(num_generations):
         grid, age_grid = life_step_with_age(grid, age_grid)
         all_history.append(grid)
         all_ages.append(age_grid)
@@ -164,6 +163,21 @@ def main():
     input_file = "input_life.csv"
     base_color = (0, 255, 0)
     
+    while True:
+        try:
+            user_input = input("Введите количество поколений (Enter = 10): ")
+            if user_input == "":
+                num_generations = 10
+                print(f"Используем {num_generations} поколений (по умолчанию)")
+                break
+            num_generations = int(user_input)
+            if num_generations <= 0:
+                print("ОШИБКА: Число должно быть положительным!")
+                continue
+            break
+        except ValueError:
+            print("ОШИБКА: Введите целое число!")
+    
     try:
         grid = read_init(input_file)
     except FileNotFoundError:
@@ -173,7 +187,7 @@ def main():
         print(f"ОШИБКА при чтении файла: {e}")
         sys.exit(1)
     
-    full_history, full_ages = simulation(grid)
+    full_history, full_ages = simulation(grid, num_generations)
     save_output_csv(full_history)
     save_output_png(full_history, full_ages, base_color)
     
