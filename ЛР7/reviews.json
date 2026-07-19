@@ -1,0 +1,34 @@
+{
+  "1020099": [],
+  "1009829": [
+    {
+      "user": "Anna",
+      "text": "Great!",
+      "rating": 4
+    }
+  ],
+  "1021403": [
+    {
+      "user": "Dasha",
+      "text": "Good",
+      "rating": 4
+    },
+    {
+      "user": "Sofia",
+      "text": "Very good!",
+      "rating": 4
+    }
+  ],
+  "1018261": [
+    {
+      "user": "Stasia",
+      "text": "Bad",
+      "rating": 1
+    },
+    {
+      "user": "Dasha",
+      "text": "Not bad",
+      "rating": 3
+    }
+  ]
+}
