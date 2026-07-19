@@ -43,7 +43,7 @@ def list_markets(markets, reviews):
                 for r in reviews[fmid]:
                     total_rating += r['rating']
                 avg = total_rating / len(reviews[fmid])
-                rating_str = f" ({avg:.1f} ★)"
+                rating_str = f" ({avg:.1f})"
             else:
                 rating_str = ""
             
