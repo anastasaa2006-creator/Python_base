@@ -196,7 +196,7 @@ def search_zip(markets, reviews):
                 for r in reviews[fmid]:
                     total += r['rating']
                 avg = total / len(reviews[fmid])
-                rating_str = f" ({avg:.1f} ★)"
+                rating_str = f" ({avg:.1f})"
             else:
                 rating_str = ""
             
@@ -254,7 +254,7 @@ def search_dist(markets, reviews):
                 for rev in reviews[fmid]:
                     total += rev['rating']
                 avg = total / len(reviews[fmid])
-                rating_str = f" ({avg:.1f} ★)"
+                rating_str = f" ({avg:.1f})"
             else:
                 rating_str = ""
             
