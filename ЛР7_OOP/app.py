@@ -48,8 +48,40 @@ class App:
 
     def cmd_list(self):
         markets = self.market_manager.get_all()
-        for i, m in enumerate(markets):
-            print(m.display_brief(i + 1))
+        per_page = 5
+        total = len(markets)
+        total_pages = (total + per_page - 1) // per_page
+        page = 1
+    
+        while True:
+            start = (page - 1) * per_page
+            end = min(start + per_page, total)
+    
+            print(f"\n=== Page {page}/{total_pages} ===")
+            for i in range(start, end):
+                print(markets[i].display_brief(i + 1))
+    
+            print()
+            if total_pages <= 1:
+                break
+    
+            print("Options: (next) (prev) (page N - enter the page number) (back)")
+            choice = input("=> ").strip().lower()
+    
+            if choice == 'next':
+                if page < total_pages:
+                    page += 1
+            elif choice == 'prev':
+                if page > 1:
+                    page -= 1
+            elif choice.isdigit():
+                num = int(choice)
+                if 1 <= num <= total_pages:
+                    page = num
+            elif choice == 'back':
+                break
+            else:
+                print("Invalid option")
 
     def cmd_view(self):
         num = safe_int_input("Enter market number => ")
