@@ -37,16 +37,8 @@ def list_markets(markets, reviews):
         for i in range(start, end):
             m = markets[i]
             fmid = m['FMID']
-            
-            if fmid in reviews and reviews[fmid]:
-                total_rating = 0
-                for r in reviews[fmid]:
-                    total_rating += r['rating']
-                avg = total_rating / len(reviews[fmid])
-                rating_str = f" ({avg:.1f})"
-            else:
-                rating_str = ""
-            
+            rating_str = get_rating_str(fmid, reviews)
+
             print(f"{i+1}. {m['MarketName']} - {m['city']}, {m['State']}{rating_str}")
         print()
         
@@ -74,7 +66,13 @@ def list_markets(markets, reviews):
     
 
 def view_markets(markets):
-    num = int(input("Enter market number => "))
+    
+    try:
+        num = int(input("Enter market number => "))
+    except ValueError:
+        print("Please enter a valid number")
+        return
+
     print(num)
     if not (1 <= num <= len(markets)):
         print("Market not found")
@@ -161,16 +159,7 @@ def search_markets(markets, reviews):
         for i in range(len(result)):
             m = result[i]
             fmid = m['FMID']
-            
-            # Считаем средний рейтинг
-            if fmid in reviews and reviews[fmid]:
-                total = 0
-                for r in reviews[fmid]:
-                    total += r['rating']
-                avg = total / len(reviews[fmid])
-                rating_str = f" (Rating: {avg:.1f})"
-            else:
-                rating_str = ""
+            rating_str = get_rating_str(fmid, reviews)
             
             print(f"{i+1}. {m['MarketName']} - {m['city']}, {m['State']}{rating_str}")
     else:
@@ -190,15 +179,7 @@ def search_zip(markets, reviews):
         for i in range(len(result)):
             m = result[i]
             fmid = m['FMID']
-            
-            if fmid in reviews and reviews[fmid]:
-                total = 0
-                for r in reviews[fmid]:
-                    total += r['rating']
-                avg = total / len(reviews[fmid])
-                rating_str = f" ({avg:.1f})"
-            else:
-                rating_str = ""
+            rating_str = get_rating_str(fmid, reviews)
             
             print(f"{i+1}. {m['MarketName']} - {m['city']}, {m['State']}{rating_str}")
     else:
@@ -220,12 +201,18 @@ def calc(lat1, lat2, long1, long2):
 
     return result
     
-def search_dist(markets, reviews):
-    lat = float(input("Enter latitude => "))
-    print(lat)
-    long = float(input("Enter longitude => "))
-    print(long)
-    r = float(input("Enter radius (miles) => "))
+def search_dist(markets, reviews, zipcodes):
+    zip_code = input("Enter ZIP Code => ").strip()
+    if zip_code not in zipcodes:
+        print("ZIP Code not found")
+        return
+    lat = zipcodes[zip_code]['lat']
+    long = zipcodes[zip_code]['lng']
+    try:
+        r = float(input("Enter radius (miles) => "))
+    except ValueError:
+        print("Please enter a valid number")
+        return
     print(r)
     
     result = []
@@ -248,15 +235,7 @@ def search_dist(markets, reviews):
         for i in range(len(result)):
             dist, m = result[i]
             fmid = m['FMID']
-            
-            if fmid in reviews and reviews[fmid]:
-                total = 0
-                for rev in reviews[fmid]:
-                    total += rev['rating']
-                avg = total / len(reviews[fmid])
-                rating_str = f" ({avg:.1f})"
-            else:
-                rating_str = ""
+            rating_str = get_rating_str(fmid, reviews)
             
             print(f"{i+1}. {m['MarketName']} - {m['city']}, {m['State']} ({dist:.1f} miles){rating_str}")
     else:
@@ -265,8 +244,11 @@ def search_dist(markets, reviews):
 def add_review(markets, reviews):
     
     list_markets(markets, reviews)
-    
-    num = int(input("Enter market number => "))
+    try:
+        num = int(input("Enter market number => "))
+    except ValueError:
+        print("Please enter a valid number")
+        return
     print(num)
     if not(1 <= num <= len(markets)):
         print("No markets found")
@@ -279,7 +261,11 @@ def add_review(markets, reviews):
     print(user)
     text = input("Enter your review text => ").strip()
     print(text)
-    rating = int(input("Enter rating (1-5) => "))
+    try:
+        rating = int(input("Enter rating (1-5) => "))
+    except ValueError:
+        print("Please enter a valid number")
+        return
     print(rating)
         
     if (rating < 1 or rating > 5):
@@ -304,7 +290,11 @@ def add_review(markets, reviews):
     print("Review added successfully!")
     
 def show_review(markets, reviews):
-    num = int(input("Enter market number => "))
+    try:
+        num = int(input("Enter market number => "))
+    except ValueError:
+        print("Please enter a valid number")
+        return
     print(num)
     if not (1 <= num <= len(markets)):
         print("No markets found")
@@ -363,22 +353,19 @@ def sort_markets(markets, reviews):
     for i in range(len(sorted_markets)):
         m = sorted_markets[i]
         fmid = m['FMID']
-        
-        if fmid in reviews and reviews[fmid]:
-            total = 0
-            for r in reviews[fmid]:
-                total += r['rating']
-            avg = total / len(reviews[fmid])
-            rating_str = f" (avg: {avg:.1f})"
-        else:
+        rating_str = get_rating_str(fmid, reviews)
+        if not rating_str:
             rating_str = " (no ratings)"
         
         print(f"{i+1}. {m['MarketName']} - {m['city']}, {m['State']}{rating_str}")       
      
 def delete_review(markets, reviews):
     list_markets(markets, reviews)
-    
-    num = int(input("Enter market number => "))
+    try:
+        num = int(input("Enter market number => "))
+    except ValueError:
+        print("Please enter a valid number")
+        return
     print(num)
     if not(1 <= num <= len(markets)):
         print("No markets found")
@@ -396,7 +383,11 @@ def delete_review(markets, reviews):
         print(f"{i+1}. User: {r['user']}, Rating: {r['rating']} ")
         print(f"Text: {r['text']}")
     
-    review_num = int(input("Enter review number to delete => "))
+    try:
+        review_num = int(input("Enter review number to delete => "))
+    except ValueError:
+        print("Please enter a valid number")
+        return
     print(review_num)
     
     if not (1 <= review_num <= len(reviews[fmid])):
@@ -421,14 +412,35 @@ def delete_review(markets, reviews):
     save_reviews(reviews)    
     print("Review deleted successfully!")
         
+def get_rating_str(fmid, reviews):
+    if fmid not in reviews or not reviews[fmid]:
+        return ""
+    total = sum(r['rating'] for r in reviews[fmid])
+    avr = total / len(reviews[fmid])
+    return f" ({avr:.1f})"
+    
+def load_zipcodes():
+    zipcodes = {}
+    try:
+        with open('zipcodes.states.csv', 'r') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                zipcodes[row['zip']] = {
+                    'lat': float(row['lat']),
+                    'lng': float(row['lng'])
+                }
+    except FileNotFoundError:
+        print("Warning: zipcodes.states.csv not found")
+    return zipcodes    
+    
 def main():
     markets = read_init('Export.csv')
     reviews = load_reviews()
+    zipcodes = load_zipcodes()
     for market in markets:
         fmid = market['FMID']
         if fmid in reviews:
-            market['reviews'] = reviews[fmid]
-            
+            market['reviews'] = reviews[fmid]            
     while True:
         comm = input("Command ('list', 'view', 'search', 'zip', 'dist', 'add', 'show', 'del', 'sort', 'end') => ")
         comm = comm.strip().lower()
@@ -442,7 +454,7 @@ def main():
         elif comm == 'zip':
             search_zip(markets, reviews)
         elif comm == 'dist':
-            search_dist(markets, reviews)
+            search_dist(markets, reviews, zipcodes)
         elif comm == 'add':
             add_review(markets, reviews)
         elif comm == 'show':

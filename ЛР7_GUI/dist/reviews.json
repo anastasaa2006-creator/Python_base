@@ -1,0 +1,30 @@
+{
+  "1009004": [],
+  "1009994": [
+    {
+      "user": "Ann",
+      "text": "Bad",
+      "rating": 1
+    },
+    {
+      "user": "Harry",
+      "text": "Not bad",
+      "rating": 3
+    }
+  ],
+  "1005588": [
+    {
+      "user": "Kris",
+      "text": "Good!",
+      "rating": 4
+    }
+  ],
+  "1018261": [],
+  "1004499": [
+    {
+      "user": "Dmitri",
+      "text": "Very good",
+      "rating": 5
+    }
+  ]
+}

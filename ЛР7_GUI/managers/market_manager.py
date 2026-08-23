@@ -1,4 +1,5 @@
 import csv
+import logging
 from models.market import Market
 from utils.helpers import haversine
 
@@ -9,11 +10,17 @@ class MarketManager:
         self.load()
 
     def load(self):
-        with open(self.filename, 'r') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                self.markets.append(Market(row))
-
+        try:
+            with open(self.filename, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    self.markets.append(Market(row))
+        except FileNotFoundError:
+            logging.error(f"Файл {self.filename} не найден!")
+        
+        except Exception as e:
+            logging.error(f"Ошибка при загрузке {self.filename}: {e}")
+            
     def get_all(self):
         return self.markets
 

@@ -1,4 +1,5 @@
 import json
+import logging
 from models.review import Review
 
 class ReviewManager:
@@ -15,7 +16,10 @@ class ReviewManager:
                     self.reviews[fmid] = [Review(r['user'], r['text'], r['rating']) for r in revs]
         except FileNotFoundError:
             self.reviews = {}
-
+        
+        except json.JSONDecodeError as e:
+            logging.error(f"Ошибка чтения JSON из {self.filename}: {e}")
+            
     def save(self):
         data = {}
         for fmid, revs in self.reviews.items():

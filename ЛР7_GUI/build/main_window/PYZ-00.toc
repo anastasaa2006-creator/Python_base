@@ -1,0 +1,2 @@
+('C:\\Users\\Анастасия\\Documents\\GitHub\\Python_base\\ЛР7_GUI\\build\\main_window\\PYZ-00.pyz',
+ [])
