@@ -9,11 +9,19 @@ class MarketManager:
         self.load()
 
     def load(self):
-        with open(self.filename, 'r') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                self.markets.append(Market(row))
-
+        try:
+            with open(self.filename, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    self.markets.append(Market(row))
+        except FileNotFoundError:
+            print(f"Ошибка: файл {self.filename} не найден!")
+            self.markets = []
+        
+        except Exception as e:
+            print(f"Ошибка при загрузке: {e}")
+            self.markets = []
+   
     def get_all(self):
         return self.markets
 

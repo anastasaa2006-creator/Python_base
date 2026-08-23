@@ -15,14 +15,21 @@ class ReviewManager:
                     self.reviews[fmid] = [Review(r['user'], r['text'], r['rating']) for r in revs]
         except FileNotFoundError:
             self.reviews = {}
-
+        
+        except json.JSONDecodeError as e:
+            print(f"Ошибка чтения JSON: {e}")
+            self.reviews = {}
+            
     def save(self):
-        data = {}
-        for fmid, revs in self.reviews.items():
-            data[fmid] = [r.to_dict() for r in revs]
-        with open(self.filename, 'w') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-
+        try:
+            data = {}
+            for fmid, revs in self.reviews.items():
+                data[fmid] = [r.to_dict() for r in revs]
+            with open(self.filename, 'w') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"Ошибка сохранения: {e}")
+        
     def add(self, market, user, text, rating):
         if market.fmid not in self.reviews:
             self.reviews[market.fmid] = []
