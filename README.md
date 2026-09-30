@@ -3,7 +3,7 @@ additional files - .txt с входными/выходными значения�
 task 4 - коды 4 задач с Codeforces + скрин;
 input_life.csv - входные значения
 Life.py - ЛР5
-
+ЛР8   ЛР9 в main
 ЛР7 без ООП в main
 
 ЛР7 с ООП в task7_OOP
