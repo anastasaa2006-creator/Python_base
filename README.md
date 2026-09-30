@@ -5,3 +5,4 @@ input_life.csv - входные значения
 Life.py - ЛР5
 
 ЛР7 без ООП в main
+ЛР7 с ООП в task7_OOP
